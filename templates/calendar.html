@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календар</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        td {
+            height: 120px;
+        }
+        .empty {
+            background-color: #f9f9f9;
+        }
+        .day-number {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .section {
+            margin: 5px 0;
+        }
+        .event {
+            background-color: #e7f4ff;
+            border: 1px solid #bbe1fa;
+            margin: 2px 0;
+            padding: 2px;
+        }
+        .reminder {
+            background-color: #ffeed0;
+            border: 1px solid #ffc107;
+            margin: 2px 0;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Календар: {{ month_name }} {{ year }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Пн</th>
+                <th>Вт</th>
+                <th>Ср</th>
+                <th>Чт</th>
+                <th>Пт</th>
+                <th>Сб</th>
+                <th>Нд</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set week = [] %}
+            {% for day, weekday in month_days %}
+                {% if weekday == 0 and week %}
+                    <tr>
+                        {% for d in week %}
+                            <td class="{{ 'empty' if d == 0 else '' }}">
+                                {% if d != 0 %}
+                                    <div class="day-number">{{ d }}</div>
+                                    <div class="section">
+                                        <strong>Події:</strong>
+                                        {% for event in events_by_day.get(d, []) %}
+                                            <div class="event">{{ event.title }}</div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="section">
+                                        <strong>Нагадування:</strong>
+                                        <div class="reminder">Приклад нагадування</div>
+                                    </div>
+                                    <div class="section">
+                                        <strong>Інше:</strong>
+                                        <div>Тут може бути будь-яка інформація</div>
+                                    </div>
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    {% set week = [] %}
+                {% endif %}
+                {% if day != 0 %}
+                    {% set week = week + [day] %}
+                {% else %}
+                    {% set week = week + [0] %}
+                {% endif %}
+            {% endfor %}
+            <tr>
+                {% for d in week %}
+                    <td class="{{ 'empty' if d == 0 else '' }}">
+                        {% if d != 0 %}
+                            <div class="day-number">{{ d }}</div>
+                            <div class="section">
+                                <strong>Події:</strong>
+                                {% for event in events_by_day.get(d, []) %}
+                                    <div class="event">{{ event.title }}</div>
+                                {% endfor %}
+                            </div>
+                            <div class="section">
+                                <strong>Нагадування:</strong>
+                                <div class="reminder">Приклад нагадування</div>
+                            </div>
+                            <div class="section">
+                                <strong>Інше:</strong>
+                                <div>Тут може бути будь-яка інформація</div>
+                            </div>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

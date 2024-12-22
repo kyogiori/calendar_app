@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Додати Теги</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Додати Теги до Події</h1>
+
+        <!-- Форма для додавання тегів -->
+        <form method="POST" action="/add-tags">
+            <div class="mb-3">
+                <label for="event_id" class="form-label">ID Події</label>
+                <input type="number" class="form-control" id="event_id" name="event_id" placeholder="Введіть ID події" required>
+            </div>
+            <div class="mb-3">
+                <label for="tags" class="form-label">Теги</label>
+                <input type="text" class="form-control" id="tags" name="tags" placeholder="Введіть теги через кому" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Додати Теги</button>
+        </form>
+
+        <a href="/" class="btn btn-secondary mt-3">Назад до списку подій</a>
+    </div>
+</body>
+</html>
